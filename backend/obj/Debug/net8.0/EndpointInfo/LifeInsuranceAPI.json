@@ -1,0 +1,160 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "LifeInsuranceAPI",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/Insurance/calculate": {
+      "post": {
+        "tags": [
+          "Insurance"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InsuranceCalculationRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InsuranceCalculationRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/InsuranceCalculationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/InsuranceCalculationResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InsuranceCalculationResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InsuranceCalculationResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Insurance/health": {
+      "get": {
+        "tags": [
+          "Insurance"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "InsuranceCalculationRequest": {
+        "type": "object",
+        "properties": {
+          "age": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "annualIncome": {
+            "type": "number",
+            "format": "double"
+          },
+          "currentDebts": {
+            "type": "number",
+            "format": "double"
+          },
+          "mortgageBalance": {
+            "type": "number",
+            "format": "double"
+          },
+          "numberOfDependents": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "yearsOfIncomeReplacement": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "existingLifeInsurance": {
+            "type": "number",
+            "format": "double"
+          },
+          "funeralExpenses": {
+            "type": "number",
+            "format": "double"
+          },
+          "educationFundNeeded": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "InsuranceCalculationResponse": {
+        "type": "object",
+        "properties": {
+          "recommendedCoverage": {
+            "type": "number",
+            "format": "double"
+          },
+          "incomeReplacement": {
+            "type": "number",
+            "format": "double"
+          },
+          "debtCoverage": {
+            "type": "number",
+            "format": "double"
+          },
+          "funeralExpenses": {
+            "type": "number",
+            "format": "double"
+          },
+          "educationFund": {
+            "type": "number",
+            "format": "double"
+          },
+          "existingCoverage": {
+            "type": "number",
+            "format": "double"
+          },
+          "netInsuranceNeeded": {
+            "type": "number",
+            "format": "double"
+          },
+          "calculationMethod": {
+            "type": "string",
+            "nullable": true
+          },
+          "recommendations": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}

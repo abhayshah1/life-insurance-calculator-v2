@@ -1,0 +1,203 @@
+<div class="container">
+  <div class="header">
+    <h1>Life Insurance Calculator</h1>
+    <p class="subtitle">Calculate your life insurance needs using the DIME method</p>
+  </div>
+
+  <div class="content-wrapper">
+    <div class="form-container">
+      <h2>Your Information</h2>
+      <form (ngSubmit)="onSubmit()" #insuranceForm="ngForm">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="age">Age *</label>
+            <input
+              type="number"
+              id="age"
+              name="age"
+              [(ngModel)]="request.age"
+              required
+              min="18"
+              max="100"
+              #age="ngModel"
+            />
+            <div class="error" *ngIf="age.invalid && age.touched">
+              Age must be between 18 and 100
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="annualIncome">Annual Income ($) *</label>
+            <input
+              type="number"
+              id="annualIncome"
+              name="annualIncome"
+              [(ngModel)]="request.annualIncome"
+              required
+              min="0"
+              #annualIncome="ngModel"
+            />
+            <div class="error" *ngIf="annualIncome.invalid && annualIncome.touched">
+              Annual income is required
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="yearsOfIncomeReplacement">Years of Income Replacement *</label>
+            <input
+              type="number"
+              id="yearsOfIncomeReplacement"
+              name="yearsOfIncomeReplacement"
+              [(ngModel)]="request.yearsOfIncomeReplacement"
+              required
+              min="0"
+              max="30"
+              #years="ngModel"
+            />
+            <div class="error" *ngIf="years.invalid && years.touched">
+              Years must be between 0 and 30
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="numberOfDependents">Number of Dependents *</label>
+            <input
+              type="number"
+              id="numberOfDependents"
+              name="numberOfDependents"
+              [(ngModel)]="request.numberOfDependents"
+              required
+              min="0"
+              #dependents="ngModel"
+            />
+            <div class="error" *ngIf="dependents.invalid && dependents.touched">
+              Number of dependents is required
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="currentDebts">Current Debts ($)</label>
+            <input
+              type="number"
+              id="currentDebts"
+              name="currentDebts"
+              [(ngModel)]="request.currentDebts"
+              min="0"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="mortgageBalance">Mortgage Balance ($)</label>
+            <input
+              type="number"
+              id="mortgageBalance"
+              name="mortgageBalance"
+              [(ngModel)]="request.mortgageBalance"
+              min="0"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="educationFundNeeded">Education Fund Needed ($)</label>
+            <input
+              type="number"
+              id="educationFundNeeded"
+              name="educationFundNeeded"
+              [(ngModel)]="request.educationFundNeeded"
+              min="0"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="funeralExpenses">Funeral Expenses ($)</label>
+            <input
+              type="number"
+              id="funeralExpenses"
+              name="funeralExpenses"
+              [(ngModel)]="request.funeralExpenses"
+              min="0"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="existingLifeInsurance">Existing Life Insurance ($)</label>
+            <input
+              type="number"
+              id="existingLifeInsurance"
+              name="existingLifeInsurance"
+              [(ngModel)]="request.existingLifeInsurance"
+              min="0"
+            />
+          </div>
+        </div>
+
+        <div class="button-group">
+          <button type="submit" class="btn btn-primary" [disabled]="loading || insuranceForm.invalid">
+            <span *ngIf="!loading">Calculate Insurance Needs</span>
+            <span *ngIf="loading">Calculating...</span>
+          </button>
+          <button type="button" class="btn btn-secondary" (click)="resetForm()">
+            Reset
+          </button>
+        </div>
+      </form>
+
+      <div class="error-message" *ngIf="error">
+        <strong>Error:</strong> {{ error }}
+      </div>
+    </div>
+
+    <div class="results-container" *ngIf="response">
+      <h2>Your Results</h2>
+
+      <div class="result-summary">
+        <div class="result-card highlight">
+          <h3>Net Insurance Needed</h3>
+          <p class="amount">${{ response.netInsuranceNeeded | number:'1.0-0' }}</p>
+        </div>
+      </div>
+
+      <div class="result-breakdown">
+        <h3>Coverage Breakdown</h3>
+        <div class="breakdown-grid">
+          <div class="breakdown-item">
+            <span class="label">Income Replacement:</span>
+            <span class="value">${{ response.incomeReplacement | number:'1.0-0' }}</span>
+          </div>
+          <div class="breakdown-item">
+            <span class="label">Debt Coverage:</span>
+            <span class="value">${{ response.debtCoverage | number:'1.0-0' }}</span>
+          </div>
+          <div class="breakdown-item">
+            <span class="label">Funeral Expenses:</span>
+            <span class="value">${{ response.funeralExpenses | number:'1.0-0' }}</span>
+          </div>
+          <div class="breakdown-item">
+            <span class="label">Education Fund:</span>
+            <span class="value">${{ response.educationFund | number:'1.0-0' }}</span>
+          </div>
+          <div class="breakdown-item total">
+            <span class="label">Total Coverage Needed:</span>
+            <span class="value">${{ response.recommendedCoverage | number:'1.0-0' }}</span>
+          </div>
+          <div class="breakdown-item">
+            <span class="label">Existing Coverage:</span>
+            <span class="value">-${{ response.existingCoverage | number:'1.0-0' }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="recommendations">
+        <h3>Recommendations</h3>
+        <div class="method-info">
+          <strong>Calculation Method:</strong> {{ response.calculationMethod }}
+        </div>
+        <ul>
+          <li *ngFor="let recommendation of response.recommendations">
+            {{ recommendation }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "LifeInsuranceAPI": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:58390;http://localhost:58391"
+    }
+  }
+}

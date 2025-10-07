@@ -1,0 +1,38 @@
+[
+  {
+    "ContainingType": "LifeInsuranceAPI.Controllers.InsuranceController",
+    "Method": "Calculate",
+    "RelativePath": "api/Insurance/calculate",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "LifeInsuranceAPI.Models.InsuranceCalculationRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "LifeInsuranceAPI.Models.InsuranceCalculationResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "LifeInsuranceAPI.Controllers.InsuranceController",
+    "Method": "Health",
+    "RelativePath": "api/Insurance/health",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  }
+]
